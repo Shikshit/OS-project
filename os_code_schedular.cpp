@@ -1,60 +1,57 @@
 #include<stdio.h> 
 #include<conio.h>
 
-void rr(int no,int remt[10],int Cur_t,int arT[10], int bsT[10]);
+void rr(int no,int remt[10],int curtt,int arT[10], int bsT[10]);
 
 main() 
 {
-	int Proc_no,j,no,CurT,RemProc,indicator,time_quan,wait,tut,arT[10],bsT[10],remt[10],x=1;
-	indicator = 0;
-	wait = 0;
-	tut = 0;
+	int procc,j,no,CurT,Rem,indicator=0,time_quan,wait=0,tut=0,arT[10],bsT[10],remt[10],x=1;
 	printf("Enter number of processes "); 
 	scanf("%d",&no);
-	RemProc = no;
+	Rem = no;
 	
 	printf("\nEnter the arrival time and burst time of the processes\n");
-	for(Proc_no = 0;Proc_no < no;Proc_no++) 
+	for(procc = 0;procc < no;procc++) 
 	{
-		printf("\nProcess P%d\n",Proc_no+1);
+		printf("\nProcess P%d\n",procc+1);
 		printf("Arrival time = "); 
-		scanf("%d",&arT[Proc_no]);
+		scanf("%d",&arT[procc]);
 		printf("Burst time = "); 
-		scanf("%d",&bsT[Proc_no]); 
-		remt[Proc_no]=bsT[Proc_no]; 
+		scanf("%d",&bsT[procc]); 
+		remt[procc]=bsT[procc]; 
 	} 
 	printf("The details of time quantum are as follows:\n");
 	printf("The time quantum for first round is 3.\n"); 
 	time_quan=3;
 	CurT=0;
-	for(Proc_no=0;RemProc!=0;) 
+	for(procc=0;Rem!=0;) 
 	{
-		if(remt[Proc_no]<=time_quan && remt[Proc_no]>0)
+		if(remt[procc]<=time_quan && remt[procc]>0)
 		{ 
-			CurT+=remt[Proc_no]; 
-			remt[Proc_no]=0; 
+			CurT+=remt[procc]; 
+			remt[procc]=0; 
 			indicator=1; 
 		} 
-		else if(remt[Proc_no]>0)
+		else if(remt[procc]>0)
 		{ 
-			remt[Proc_no]-=time_quan; 
+			remt[procc]-=time_quan; 
 			CurT+=time_quan; 
 		} 
-		if(remt[Proc_no]==0 && indicator==1)			
-		{ printf("%d",Proc_no);
-			RemProc--;				
-			printf("P %d",Proc_no+1); 
-			printf("\t\t\t%d",CurT-arT[Proc_no]);
-			printf("\t\t\t%d\n",CurT-bsT[Proc_no]-arT[Proc_no]);
-			wait+=CurT-arT[Proc_no]-bsT[Proc_no]; 
-			tut+=CurT-arT[Proc_no]; 
+		if(remt[procc]==0 && indicator==1)			
+		{ printf("%d",procc);
+			Rem--;				
+			printf("P %d",procc+1); 
+			printf("\t\t\t%d",CurT-arT[procc]);
+			printf("\t\t\t%d\n",CurT-bsT[procc]-arT[procc]);
+			wait+=CurT-arT[procc]-bsT[procc]; 
+			tut+=CurT-arT[procc]; 
 			indicator=0; 
                        
 		} 
-		if(Proc_no==no-1){
+		if(procc==no-1){
 			x++;
 			if(x==2){
-				Proc_no=0;
+				procc=0;
 				time_quan=6;
 				
 				printf("The time quantum for second round is 6. \n");
@@ -63,11 +60,11 @@ main()
 				break;
 			}
 		}
-		else if(CurT >= arT[Proc_no+1]){
-			Proc_no++;
+		else if(CurT >= arT[procc+1]){
+			procc++;
 		}
 		else{
-			Proc_no=0;
+			procc=0;
 		}
 	}
 	
@@ -77,18 +74,18 @@ main()
 }
 
 
-void rr(int no,int remt[10],int Cur_t,int arT[10], int bsT[10]){
+void rr(int no,int remt[10],int curtt,int arT[10], int bsT[10]){
 	
 	float avg_wait,avg_tut;
-    int i,j,n=no,temp,btime[20],Proc_no[20],w_time[20],tut_t[20],total=0,loc;
+    int i,j,n=no,temp,btime[20],procc[20],w_time[20],tut_t[20],total=0,loc;
     
     printf("Third round with least burst time.\n");
     
     for(i=0;i<n;i++)
     {
         btime[i]=remt[i];
-        w_time[i]=Cur_t-arT[i]-btime[i];
-		Proc_no[i]=i+1;
+        w_time[i]=curtt-arT[i]-btime[i];
+		procc[i]=i+1;
     }
 	
     for(i=0;i<n;i++)
@@ -103,9 +100,9 @@ void rr(int no,int remt[10],int Cur_t,int arT[10], int bsT[10]){
         temp=btime[i];
         btime[i]=btime[loc];
         btime[loc]=temp;
-        temp=Proc_no[i];
-        Proc_no[i]=Proc_no[loc];
-        Proc_no[loc]=temp;
+        temp=procc[i];
+        procc[i]=procc[loc];
+        procc[loc]=temp;
     }
 	
     for(i=1;i<n;i++)
@@ -123,7 +120,7 @@ void rr(int no,int remt[10],int Cur_t,int arT[10], int bsT[10]){
     {
         tut_t[i]=btime[i]+w_time[i];
         total=total + tut_t[i];
-        printf("\nP%d\t\t\t%d\t\t\t%d\t\t\t%d",Proc_no[i],btime[i],w_time[i],tut_t[i]);
+        printf("\nP%d\t\t\t%d\t\t\t%d\t\t\t%d",procc[i],btime[i],w_time[i],tut_t[i]);
     }
     avg_tut=(float)total/n;
     printf("\n\nAverage waiting time = %f",avg_wait);
