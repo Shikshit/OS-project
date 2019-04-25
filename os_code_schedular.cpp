@@ -73,7 +73,7 @@ main()
 	
 	rr(no,remt,CurT,arT,bsT);
 	
-	
+	return 0;
 }
 
 
