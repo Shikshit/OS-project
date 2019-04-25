@@ -1,17 +1,17 @@
 #include<stdio.h> 
 #include<conio.h>
 
-void rr(int no,int remt[10],int Cur,int arT[10], int bsT[10]);
+void rr(int no,int remt[10],int Cur_t,int arT[10], int bsT[10]);
 
 main() 
 {
-	int Proc_no,j,no,Cur,rem,ind=0,timeq,wait=0,tut=0,arT[10],bsT[10],remt[10],x=1;
-	ind = 0;
+	int Proc_no,j,no,CurT,RemProc,indicator,time_quan,wait,tut,arT[10],bsT[10],remt[10],x=1;
+	indicator = 0;
 	wait = 0;
 	tut = 0;
 	printf("Enter number of processes "); 
 	scanf("%d",&no);
-	rem = no;
+	RemProc = no;
 	
 	printf("\nEnter the arrival time and burst time of the processes\n");
 	for(Proc_no = 0;Proc_no < no;Proc_no++) 
@@ -25,37 +25,37 @@ main()
 	} 
 	printf("The details of time quantum are as follows:\n");
 	printf("The time quantum for first round is 3.\n"); 
-	timeq=3;
-	cur=0;
-	for(Proc_no=0;rem!=0;) 
+	time_quan=3;
+	CurT=0;
+	for(Proc_no=0;RemProc!=0;) 
 	{
-		if(remt[Proc_no]<=timeq && remt[Proc_no]>0)
+		if(remt[Proc_no]<=time_quan && remt[Proc_no]>0)
 		{ 
-			cur+=remt[Proc_no]; 
+			CurT+=remt[Proc_no]; 
 			remt[Proc_no]=0; 
-			ind=1; 
+			indicator=1; 
 		} 
 		else if(remt[Proc_no]>0)
 		{ 
-			remt[Proc_no]-=timeq; 
-			cur+=timeq; 
+			remt[Proc_no]-=time_quan; 
+			CurT+=time_quan; 
 		} 
-		if(remt[Proc_no]==0 && ind==1)			
+		if(remt[Proc_no]==0 && indicator==1)			
 		{ printf("%d",Proc_no);
-			rem--;				
+			RemProc--;				
 			printf("P %d",Proc_no+1); 
-			printf("\t\t\t%d",cur-arT[Proc_no]);
-			printf("\t\t\t%d\n",cur-bsT[Proc_no]-arT[Proc_no]);
-			wait+=cur-arT[Proc_no]-bsT[Proc_no]; 
-			tut+=cur-arT[Proc_no]; 
-			ind=0; 
+			printf("\t\t\t%d",CurT-arT[Proc_no]);
+			printf("\t\t\t%d\n",CurT-bsT[Proc_no]-arT[Proc_no]);
+			wait+=CurT-arT[Proc_no]-bsT[Proc_no]; 
+			tut+=CurT-arT[Proc_no]; 
+			indicator=0; 
                        
 		} 
 		if(Proc_no==no-1){
 			x++;
 			if(x==2){
 				Proc_no=0;
-				timeq=6;
+				time_quan=6;
 				
 				printf("The time quantum for second round is 6. \n");
 			}
@@ -63,7 +63,7 @@ main()
 				break;
 			}
 		}
-		else if(cur >= arT[Proc_no+1]){
+		else if(CurT >= arT[Proc_no+1]){
 			Proc_no++;
 		}
 		else{
@@ -71,9 +71,9 @@ main()
 		}
 	}
 	
-	rr(no,remt,cur,arT,bsT);
+	rr(no,remt,CurT,arT,bsT);
 	
-	return 0;
+	
 }
 
 
